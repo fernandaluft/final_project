@@ -38,4 +38,4 @@ class Scraping:
         os.system('kaggle datasets download -d mohamedbakhet/amazon-books-reviews')
 
         # Unzip the downloaded file
-        os.system('unzip -q {self.base_path}amazon-books-reviews.zip -d {self.base_path}final_project/data')
+        os.system('unzip -q /content/amazon-books-reviews.zip -d /content/final_project/data')
