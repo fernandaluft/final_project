@@ -9,17 +9,34 @@ Original file is located at
 ## Scraping Module
 """
 
+import os
+
 class Scraping:
     def __init__(self):
-        !mkdir -p ~/.kaggle
-        !cp ../config/kaggle.json ~/.kaggle/
-        !chmod 600 ~/.kaggle/kaggle.json
+        # Create the directory if it doesn't exist
+        kaggle_dir = os.path.expanduser('~/.kaggle')
+        os.makedirs(kaggle_dir, exist_ok=True)
+
+        # Copy kaggle.json to the directory
+        kaggle_json_src = './final_project/config/kaggle.json'
+        kaggle_json_dst = os.path.join(kaggle_dir, 'kaggle.json')
+        os.system(f'cp {kaggle_json_src} {kaggle_json_dst}')
+
+        # Set permissions for kaggle.json
+        os.system(f'chmod 600 {kaggle_json_dst}')
+
+        # Import the kaggle module
         import kaggle
 
     def kaggle_scrape(self):
-        !kaggle datasets download -d mohamedbakhet/amazon-books-reviews
-        !mv /workspaces/final_project/src/amazon-books-reviews.zip /workspaces/final_project/data/
-        !unzip -q /workspaces/final_project/data/amazon-books-reviews.zip -d /workspaces/final_project/data
+        # Download the dataset using the kaggle CLI
+        os.system('kaggle datasets download -d mohamedbakhet/amazon-books-reviews')
+        print(os.system('pwd'))
+        # Move the downloaded zip file to the desired location
+        os.system('mv ../amazon-books-reviews.zip ../final_project/data/')
+
+        # Unzip the downloaded file
+        os.system('unzip -q ../final_project/data/amazon-books-reviews.zip -d ../final_project/data')
 
 scraping = Scraping()
 scraping.kaggle_scrape()
