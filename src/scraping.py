@@ -12,13 +12,18 @@ Original file is located at
 import os
 
 class Scraping:
-    def __init__(self):
+    def __init__(self, IN_COLAB):
+        if IN_COLAB is True: 
+          self.base_path = "/content/"
+        else: 
+          self.base_path = "/workspaces/"
+
         # Create the directory if it doesn't exist
         kaggle_dir = os.path.expanduser('~/.kaggle')
         os.makedirs(kaggle_dir, exist_ok=True)
 
         # Copy kaggle.json to the directory
-        kaggle_json_src = './final_project/config/kaggle.json'
+        kaggle_json_src = self.base_path + 'final_project/config/kaggle.json'
         kaggle_json_dst = os.path.join(kaggle_dir, 'kaggle.json')
         os.system(f'cp {kaggle_json_src} {kaggle_json_dst}')
 
@@ -31,12 +36,6 @@ class Scraping:
     def kaggle_scrape(self):
         # Download the dataset using the kaggle CLI
         os.system('kaggle datasets download -d mohamedbakhet/amazon-books-reviews')
-        print(os.system('pwd'))
-        # Move the downloaded zip file to the desired location
-        os.system('mv ../amazon-books-reviews.zip ../final_project/data/')
 
         # Unzip the downloaded file
-        os.system('unzip -q ../final_project/data/amazon-books-reviews.zip -d ../final_project/data')
-
-scraping = Scraping()
-scraping.kaggle_scrape()
+        os.system('unzip -q {self.base_path}amazon-books-reviews.zip -d {self.base_path}final_project/data')
