@@ -39,3 +39,5 @@ class Scraping:
 
         # Unzip the downloaded file
         os.system(f'unzip -q {self.base_path}/amazon-books-reviews.zip -d {self.base_path}final_project/data')
+        os.system(f'rm {self.base_path}/amazon-books-reviews.zip')
+        
