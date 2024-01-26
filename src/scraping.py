@@ -17,6 +17,9 @@ class Scraping:
           self.base_path = "/content/"
         else: 
           self.base_path = "/workspaces/"
+          
+        self.books_reviews_ds = books_reviews_ds
+        self.sentiment_ds = sentiment_ds
 
         # Create the directory if it doesn't exist
         kaggle_dir = os.path.expanduser('~/.kaggle')
