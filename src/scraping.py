@@ -38,10 +38,10 @@ class Scraping:
 
     def kaggle_scrape(self):
         # Download the dataset using the kaggle CLI
-        if books_reviews_ds is True: 
+        if self.books_reviews_ds is True: 
             os.system('kaggle datasets download -d mohamedbakhet/amazon-books-reviews')
 
-        if sentiment_ds is True: 
+        if self.sentiment_ds is True: 
             os.system('kaggle kernels pull lakshmi25npathi/sentiment-analysis-of-imdb-movie-reviews')
 
         # Unzip the downloaded file
