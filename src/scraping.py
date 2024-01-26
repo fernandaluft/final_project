@@ -12,7 +12,7 @@ Original file is located at
 import os
 
 class Scraping:
-    def __init__(self, IN_COLAB):
+    def __init__(self, IN_COLAB, books_reviews_ds = False, sentiment_ds = False):
         if IN_COLAB is True: 
           self.base_path = "/content/"
         else: 
@@ -35,7 +35,11 @@ class Scraping:
 
     def kaggle_scrape(self):
         # Download the dataset using the kaggle CLI
-        os.system('kaggle datasets download -d mohamedbakhet/amazon-books-reviews')
+        if books_reviews_ds is True: 
+            os.system('kaggle datasets download -d mohamedbakhet/amazon-books-reviews')
+
+        if sentiment_ds is True: 
+            os.system('kaggle kernels pull lakshmi25npathi/sentiment-analysis-of-imdb-movie-reviews')
 
         # Unzip the downloaded file
         os.system(f'unzip -q {self.base_path}/amazon-books-reviews.zip -d {self.base_path}final_project/data')
