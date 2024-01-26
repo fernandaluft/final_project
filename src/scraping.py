@@ -42,8 +42,9 @@ class Scraping:
             os.system('kaggle datasets download -d mohamedbakhet/amazon-books-reviews')
 
         if self.sentiment_ds is True: 
-            os.system('kaggle kernels pull lakshmi25npathi/sentiment-analysis-of-imdb-movie-reviews')
-
+            os.system('kaggle datasets download -d crisbam/imdb-dataset-of-65k-movie-reviews-and-translation')
+            #kaggle.api.dataset_download_files()
+        
         # Unzip the downloaded file
         os.system(f'unzip -q {self.base_path}/amazon-books-reviews.zip -d {self.base_path}final_project/data')
         os.system(f'rm {self.base_path}/amazon-books-reviews.zip')
