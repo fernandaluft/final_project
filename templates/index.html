@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>4Geeks Final Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h2>4 Geeks - Machine Learning Final Project</h2>
+        <h3>Amazon Books Analysis</h3>
+
+<a href="{{ url_for('eda') }}">Go to EDA</a>
+
+        <p>What would you like to do?</p>
+        <form class="pure-form pure-form-aligned" method="POST" action="/">
+            <select name="choose_model">
+            <option value="" disabled selected hidden>Choose an option</option>
+            <option value="classification">Classification</option>
+            <option value="sentiment_analysis">Sentiment Analysis</option>
+            </select>
+
+            <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </form>
+
+
+    </div>
+</body>
+
+</html>
