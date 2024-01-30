@@ -98,3 +98,13 @@ select {
     border-radius: 5px;
     outline: none;
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    color: #4caf50;
+}
