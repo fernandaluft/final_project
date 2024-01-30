@@ -1,3 +1,6 @@
+import os
+os.environ['FLASK_ENV'] = 'production'
+
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from pickle import load
 import pandas as pd
@@ -81,5 +84,3 @@ def prediction():
 
     return render_template('sentiment_analysis.html', result=result)
 
-if __name__ == '__main__':
-    app.run(debug=True)
