@@ -6,6 +6,7 @@ from pickle import load
 import pandas as pd
 import re
 from zipfile import ZipFile
+#from sentiment_ml_train import SentimentMLTrain
 
 app = Flask(__name__)
 
@@ -43,14 +44,32 @@ def rec(book, df_rec, model_rec):
     recs = [b for b in recs if preprocess_text(b) != book]
     return list(set(recs))[0:5]
 
-'''def sentiment_analysis(review):
-    book_review = [review.strip().lower().replace('\t', ' ').replace('\n', ' ').replace('.', '')]
-    book_review_vector = vector.transform(book_review).toarray()
-    prediction = model.predict(book_review_vector)
-    if prediction == 1:
-        return 'Positive'
+def calculate_sentiment_book(title):
+  sentiment_ml = SentimentMLTrain(None)
+  n_neg = 0
+  n_pos = 0
+  with open("/content/final_project/models/model1k.pkl", "rb") as f:
+    sentiment_model = pickle.load(f)
+
+  with open("/content/final_project/models/tf_idf.pickle", "rb") as f:
+    vec = pickle.load(f)
+  books = pd.read_csv("/content/final_project/data/content/final_project/data/books_reviews.csv")
+  
+  
+  books_subset = books[books.Title == title]['review/text']
+
+  for rev, rev2 in books_subset.items():
+  
+    processed = sentiment_ml.preprocess_text(rev2)
+    processed = vec.transform([processed])
+    
+    score = sentiment_model.predict(processed)
+    if score >= 5:
+      n_pos += 1
     else:
-        return 'Negative'''
+      n_neg += 1
+    
+  return [n_neg, n_pos]
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
