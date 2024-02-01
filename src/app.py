@@ -49,7 +49,7 @@ def calculate_sentiment_book(title):
   sentiment_ml = SentimentMLTrain(None)
   n_neg = 0
   n_pos = 0
-  with open("/content/final_project/models/sentiment_modek.pkl", "rb") as f:
+  with open("/content/final_project/models/model1k.pkl", "rb") as f:
     sentiment_model = pickle.load(f)
 
   with open("/content/final_project/models/tf_idf.pickle", "rb") as f:
