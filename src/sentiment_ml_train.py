@@ -60,7 +60,7 @@ class SentimentMLTrain():
   def read_sentiment_dataset(self):
     !unzip -o -n /content/imdb-dataset-of-65k-movie-reviews-and-translation.zip -d {base_path}final_project/data
     os.system(f'rm -rf /content/imdb-dataset-of-65k-movie-reviews-and-translation.zip')
-    self.sentiment_df = pd.read_csv(f"{base_path}final_project/data/IMDB-Dataset.csv").sample(1000)
+    self.sentiment_df = pd.read_csv(f"{base_path}final_project/data/IMDB-Dataset.csv").sample(5000)
 
   def preprocess_text(self, text):
     text = re.sub(r'\W|\d', ' ', str(text))  # Remove special characters and digits
@@ -107,7 +107,7 @@ sentiment_ml_train.split_data()
 sentiment_ml_train.train_model()
 sentiment_ml_train.evaluate_model()
 
-sentiment_ml_train.save_model("/content/final_project/models/model1k.pkl")
+sentiment_ml_train.save_model("/content/final_project/models/sentiment_model.pkl")
 
 !unzip -o -n /content/final_project/preprocessed_data/xaa_books_reviews.zip -d {base_path}final_project/data
 
@@ -117,7 +117,7 @@ def calculate_sentiment_book(title):
   sentiment_ml = SentimentMLTrain(None)
   n_neg = 0
   n_pos = 0
-  with open("/content/final_project/models/model1k.pkl", "rb") as f:
+  with open("/content/final_project/models/sentiment_model.pkl", "rb") as f:
     sentiment_model = pickle.load(f)
 
   with open("/content/final_project/models/tf_idf.pickle", "rb") as f:

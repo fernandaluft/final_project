@@ -44,11 +44,12 @@ def rec(book, df_rec, model_rec):
     recs = [b for b in recs if preprocess_text(b) != book]
     return list(set(recs))[0:5]
 
+'''
 def calculate_sentiment_book(title):
   sentiment_ml = SentimentMLTrain(None)
   n_neg = 0
   n_pos = 0
-  with open("/content/final_project/models/model1k.pkl", "rb") as f:
+  with open("/content/final_project/models/sentiment_modek.pkl", "rb") as f:
     sentiment_model = pickle.load(f)
 
   with open("/content/final_project/models/tf_idf.pickle", "rb") as f:
@@ -70,7 +71,7 @@ def calculate_sentiment_book(title):
       n_neg += 1
     
   return [n_neg, n_pos]
-
+'''
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return choose_model()
