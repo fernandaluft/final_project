@@ -6,7 +6,13 @@ from pickle import load
 import pandas as pd
 import re
 from zipfile import ZipFile
-#from sentiment_ml_train import SentimentMLTrain
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('wordnet')
 
 app = Flask(__name__)
 
@@ -16,6 +22,17 @@ with ZipFile('books_processed.zip', 'r') as zip_file:
 
 vector_rec = load(open("vector_books.sav", "rb"))
 model_rec = load(open("knn_neighbors_books.sav", "rb"))
+vector_sentiment = load(open("tf_idf.sav", "rb"))
+model_sentiment = load(open("model1k.pkl", "rb"))
+
+def preprocess_text_sentiment_analysis(text):
+    stop_words = set(stopwords.words('english'))
+    lemmatizer = WordNetLemmatizer()
+    text = re.sub(r'\W|\d', ' ', str(text))  # Remove special characters and digits
+    tokens = word_tokenize(text.lower())  # Tokenize and convert to lowercase
+    lemmatized_tokens = [lemmatizer.lemmatize(word) for word in tokens if
+                         word not in stop_words]  # Lemmatize and remove stopwords
+    return ' '.join(lemmatized_tokens)
 
 def preprocess_text(text):
     # remove special chars and digits
@@ -44,34 +61,23 @@ def rec(book, df_rec, model_rec):
     recs = [b for b in recs if preprocess_text(b) != book]
     return list(set(recs))[0:5]
 
-'''
 def calculate_sentiment_book(title):
-  sentiment_ml = SentimentMLTrain(None)
   n_neg = 0
   n_pos = 0
-  with open("/content/final_project/models/model1k.pkl", "rb") as f:
-    sentiment_model = pickle.load(f)
 
-  with open("/content/final_project/models/tf_idf.pickle", "rb") as f:
-    vec = pickle.load(f)
-  books = pd.read_csv("/content/final_project/data/content/final_project/data/books_reviews.csv")
-  
-  
-  books_subset = books[books.Title == title]['review/text']
+  books_subset = df_rec[df_rec.Title == title]['review/text']
 
   for rev, rev2 in books_subset.items():
-  
-    processed = sentiment_ml.preprocess_text(rev2)
-    processed = vec.transform([processed])
-    
-    score = sentiment_model.predict(processed)
+    processed = preprocess_text_sentiment_analysis(rev2)
+    processed = vector_sentiment.transform([processed])
+    score = model_sentiment.predict(processed)
+
     if score >= 5:
       n_pos += 1
     else:
       n_neg += 1
-    
   return [n_neg, n_pos]
-'''
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return choose_model()
@@ -92,15 +98,11 @@ def recommendation_book():
     return render_template('book_recommendation.html', book_list=book_list, book_title=book_title)
 
 @app.route('/sentiment_analysis', methods=['GET', 'POST'])
-def prediction():
-    review = ''
-    result = ''
-    if request.method == 'POST' and 'review' in request.form:
-        review = request.form.get('review')
-        if review is None:
-            result = 'Enter a review'
-        else:
-            result = sentiment_analysis(review)
+def sentiment():
+    title_sentiment = ''
+    sentiments = []
+    if request.method == 'POST' and 'title_sentiment' in request.form:
+        title_sentiment = request.form.get('title_sentiment')
+        sentiments = calculate_sentiment_book(title_sentiment)
 
-    return render_template('sentiment_analysis.html', result=result)
-
+    return render_template('sentiment_analysis.html', sentiments=sentiments)
