@@ -15,3 +15,5 @@ sympy>=1.10.1
 kaggle
 flask
 gunicorn==20.1.0
+nltk
+zipfile
