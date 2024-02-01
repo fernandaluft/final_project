@@ -9,12 +9,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
+<div class="container-eda">
       <h2>Amazon Books Reviews Dataset</h2>
       <h3>Exploratory Data Analysis</h3>
-
-
-    <p><a href="{{ url_for('index') }}" class="back-to-index">Back to Index</a></p>
+      <p><a href="{{ url_for('index') }}" class="back-to-index">Back to Index</a></p>
 </div>
+<div class="image-container">
+        <a href="{{ url_for('static', filename='charts/pie_chart_review_score.html') }}"><img src="{{ url_for('static', filename='charts/pie_chart_review_score.jpg') }}" alt="Pie charts of scores" class="image"></a>
+        <a href="{{ url_for('static', filename='charts/bar_books_reviews.html') }}"><img src="{{ url_for('static', filename='charts/bar_books_reviews.jpg') }}" alt="Bar plot of books reviews" class="image"></a>
+        <img src="{{ url_for('static', filename='charts/barplot_categories.jpg') }}" alt="Bar plot of categories" class="image">
+        <a href="{{ url_for('static', filename='charts/books_ratings.html') }}"><img src="{{ url_for('static', filename='charts/books_ratings.jpg') }}" alt="Click on the picture to see dynamic chart" class="image"></a>
+        <img src="{{ url_for('static', filename='charts/plot_publisher_reviewss.jpg') }}" alt="Bar plot of publishers X reviews" class="image">
+        <img src="{{ url_for('static', filename='charts/wordcloud_categories.jpg') }}" alt="Wordcloud of Categories" class="image">
+        <img src="{{ url_for('static', filename='charts/wordcloud_summary.jpg') }}" alt="Wordcloud of Reviews Summary" class="image">
+</div>
+
   </body>
 </html>
