@@ -50,16 +50,21 @@ def choose_model():
 
     return render_template('index.html')
 
-def rec(book, df_rec, model_rec):
+def rec(book, df_rec, model):
     recs=[]
     book = preprocess_text(book)
+    if book not in df_rec['Title'].values:
+        return ["Book not in database"]
     book_index = df_rec[df_rec['Title'] == book].index[0]
     distances, indices = model_rec.kneighbors(vector_rec[book_index], n_neighbors=12)
     similar_books = [(df_rec['Title'][i], distances[0][j]) for j, i in enumerate(indices[0])]
     for m in range(len(similar_books)-1):
         recs.append((similar_books[1:][m][0]).capitalize())
     recs = [b for b in recs if preprocess_text(b) != book]
-    return list(set(recs))[0:5]
+    if not recs:
+        return ["No recommendations"]
+    else:
+        return list(set(recs))[0:5]
 
 def calculate_sentiment_book(title):
   n_neg = 0
