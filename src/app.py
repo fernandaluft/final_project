@@ -1,5 +1,5 @@
-#import os
-#os.environ['FLASK_ENV'] = 'production'
+import os
+os.environ['FLASK_ENV'] = 'production'
 
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from pickle import load
@@ -88,8 +88,8 @@ def index():
     return choose_model()
 
 @app.route('/eda')
-def eda(filename=None):
-    render_template('eda.html')
+def eda():
+    return render_template('eda.html')
 
 @app.route('/book_recommendation', methods=['GET', 'POST'])
 def recommendation_book():
@@ -111,5 +111,3 @@ def sentiment():
         sentiments = calculate_sentiment_book(title_sentiment)
 
     return render_template('sentiment_analysis.html', sentiments=sentiments)
-
-app.run()
