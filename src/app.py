@@ -1,5 +1,5 @@
-import os
-os.environ['FLASK_ENV'] = 'production'
+#import os
+#os.environ['FLASK_ENV'] = 'production'
 
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from pickle import load
@@ -12,7 +12,7 @@ from nltk.stem import WordNetLemmatizer
 import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
-nltk.download('wordnet', download_dir='final_project/data/nltk_data')
+nltk.download('wordnet')
 
 app = Flask(__name__)
 
@@ -112,6 +112,5 @@ def sentiment():
 
     return render_template('sentiment_analysis.html', sentiments=sentiments)
 
-'''if __name__ == "__main__":
+if __name__ == "__main__":
     app.run(debug=True)
-'''
