@@ -20,10 +20,10 @@ with ZipFile('books_processed.zip', 'r') as zip_file:
     with zip_file.open('books_processed.csv') as csv_file:
         df_rec = pd.read_csv(csv_file)
 
-vector_rec = load(open("final_project/models/vector_books.sav", "rb"))
-model_rec = load(open("final_project/models/knn_neighbors_books.sav", "rb"))
-vector_sentiment = load(open("final_project/models/tf_idf.pickle", "rb"))
-model_sentiment = load(open("final_project/models/model1k.pkl", "rb"))
+vector_rec = load(open("vector_books.sav", "rb"))
+model_rec = load(open("knn_neighbors_books.sav", "rb"))
+vector_sentiment = load(open("tf_idf.sav", "rb"))
+model_sentiment = load(open("model1k.pkl", "rb"))
 
 def preprocess_text_sentiment_analysis(text):
     stop_words = set(stopwords.words('english'))
