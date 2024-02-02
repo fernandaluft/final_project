@@ -16,7 +16,7 @@ nltk.download('wordnet')
 
 app = Flask(__name__)
 
-with ZipFile('src/books_processed.zip', 'r') as zip_file:
+with ZipFile('books_processed.zip', 'r') as zip_file:
     with zip_file.open('books_processed.csv') as csv_file:
         df_rec = pd.read_csv(csv_file)
 
