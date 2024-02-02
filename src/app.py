@@ -1,5 +1,5 @@
-import os
-os.environ['FLASK_ENV'] = 'production'
+#import os
+#os.environ['FLASK_ENV'] = 'production'
 
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from pickle import load
@@ -16,14 +16,14 @@ nltk.download('wordnet')
 
 app = Flask(__name__)
 
-with ZipFile('books_processed.zip', 'r') as zip_file:
+with ZipFile('src/books_processed.zip', 'r') as zip_file:
     with zip_file.open('books_processed.csv') as csv_file:
         df_rec = pd.read_csv(csv_file)
 
-vector_rec = load(open("vector_books.sav", "rb"))
-model_rec = load(open("knn_neighbors_books.sav", "rb"))
-vector_sentiment = load(open("tf_idf.sav", "rb"))
-model_sentiment = load(open("model1k.pkl", "rb"))
+vector_rec = load(open("/workspaces/final_project/models/vector_books.sav", "rb"))
+model_rec = load(open("/workspaces/final_project/models/knn_neighbors_books.sav", "rb"))
+vector_sentiment = load(open("/workspaces/final_project/models/tf_idf.pickle", "rb"))
+model_sentiment = load(open("/workspaces/final_project/models/model1k.pkl", "rb"))
 
 def preprocess_text_sentiment_analysis(text):
     stop_words = set(stopwords.words('english'))
@@ -111,3 +111,6 @@ def sentiment():
         sentiments = calculate_sentiment_book(title_sentiment)
 
     return render_template('sentiment_analysis.html', sentiments=sentiments)
+
+if __name__ == "__main__":
+    app.run(debug=True)

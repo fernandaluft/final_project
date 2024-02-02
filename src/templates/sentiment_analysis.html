@@ -10,16 +10,18 @@
 <body>
     <div class="container">
         <h3>Sentiment Analysis</h3>
-        <p>Enter your review:</p>
-        <form class="pure-form pure-form-aligned" method="POST" action="{{ url_for('prediction') }}">
-            <input type="text" name="review" placeholder="Review..." required>
+        <p>Enter the title of a book:</p>
+        <form class="pure-form pure-form-aligned" method="POST" action="{{ url_for('sentiment') }}">
+            <input type="text" name="title_sentiment" placeholder="Title of the book" required>
 
             <button type="submit" class="pure-button pure-button-primary">Submit</button>
         </form>
 
-        {% if result %}
-        <p> Sentiment: {{ result }}</p>
+        {% if sentiments %}
+        <ul><p>Negative: {{ sentiments[0] }}</p></ul>
+        <ul><p>Positive: {{ sentiments[1] }}</p></ul>
         {% endif %}
+
     <p><a href="{{ url_for('index') }}" class="back-to-index">Back to Index</a></p>
     </div>
 
